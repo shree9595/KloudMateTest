@@ -13,5 +13,5 @@ Clone the project first.
 install all npm package.
 
 ### `npm start`
-To run your project.
+To start project.
 
