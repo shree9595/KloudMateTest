@@ -1,1 +1,1 @@
-[{"bundle":{"format":"esm"},"handler":"functions/payment.main","runtime":"nodejs16.x","srcPath":"services"},{"bundle":{"format":"esm"},"handler":"functions/lambda.main","runtime":"nodejs16.x","srcPath":"services"}]
+[{"bundle":{"format":"esm"},"handler":"functions/payment.main","runtime":"nodejs16.x","srcPath":"services"},{"bundle":{"format":"esm"},"handler":"functions/checkStatus.main","runtime":"nodejs16.x","srcPath":"services"}]

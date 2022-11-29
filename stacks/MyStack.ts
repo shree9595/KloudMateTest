@@ -20,7 +20,7 @@ export function MyStack({ stack }: StackContext) {
     },
     routes: {
       "GET    /payment/all": "functions/payment.main",
-      "GET    /check-status": "functions/lambda.main",
+      "GET    /check-status": "functions/checkStatus.main",
     },
   });
 

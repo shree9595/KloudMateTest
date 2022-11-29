@@ -1019,7 +1019,7 @@
                         "environment": {
                           "variables": {
                             "SST_DEBUG_SRC_PATH": "services",
-                            "SST_DEBUG_SRC_HANDLER": "functions/lambda.main",
+                            "SST_DEBUG_SRC_HANDLER": "functions/checkStatus.main",
                             "SST_DEBUG_ENDPOINT": "wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root",
                             "SST_DEBUG_BUCKET_NAME": "arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g",
                             "SST_FUNCTION_ID": "arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status",

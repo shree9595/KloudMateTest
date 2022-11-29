@@ -20,7 +20,7 @@ function MyStack({ stack }) {
     },
     routes: {
       "GET    /payment/all": "functions/payment.main",
-      "GET    /check-status": "functions/lambda.main"
+      "GET    /check-status": "functions/checkStatus.main"
     }
   });
   api.attachPermissions([table]);
