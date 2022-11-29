@@ -1,0 +1,1267 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.173"
+        }
+      },
+      "arn-aws-iam--305172134505-root-Test-MyStack": {
+        "id": "arn-aws-iam--305172134505-root-Test-MyStack",
+        "path": "arn-aws-iam--305172134505-root-Test-MyStack",
+        "children": {
+          "CustomResourceHandler": {
+            "id": "CustomResourceHandler",
+            "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "Test"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "arn-aws-iam--305172134505-root"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:PutObject",
+                                    "s3:DeleteObject"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "arn:aws:s3:::sstbootstrap-apsouth10677a8a5-q5ecp1blqkqt/*"
+                                },
+                                {
+                                  "Action": [
+                                    "ssm:GetParametersByPath",
+                                    "ssm:PutParameter"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    "arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/arn-aws-iam--305172134505-root/*",
+                                    "arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/.fallback/*"
+                                  ]
+                                },
+                                {
+                                  "Action": [
+                                    "ssm:GetParameter",
+                                    "ssm:PutParameter",
+                                    "ssm:DeleteParameter"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "arn:aws:ssm:ap-south-1:305172134505:parameter/*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "CustomResourceHandlerServiceRoleDefaultPolicy73F93F56",
+                            "roles": [
+                              {
+                                "Ref": "CustomResourceHandlerServiceRole41AEC181"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.50.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.50.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-305172134505-ap-south-1",
+                      "s3Key": "377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CustomResourceHandlerServiceRole41AEC181",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "index.handler",
+                    "memorySize": 1024,
+                    "runtime": "nodejs16.x",
+                    "tags": [
+                      {
+                        "key": "sst:app",
+                        "value": "Test"
+                      },
+                      {
+                        "key": "sst:stage",
+                        "value": "arn-aws-iam--305172134505-root"
+                      }
+                    ],
+                    "timeout": 900
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.50.0"
+            }
+          },
+          "StackMetadata": {
+            "id": "StackMetadata",
+            "path": "arn-aws-iam--305172134505-root-Test-MyStack/StackMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/StackMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResource",
+              "version": "2.50.0"
+            }
+          },
+          "Payments": {
+            "id": "Payments",
+            "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments",
+            "children": {
+              "Table": {
+                "id": "Table",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                      "aws:cdk:cloudformation:props": {
+                        "keySchema": [
+                          {
+                            "attributeName": "paymentId",
+                            "keyType": "HASH"
+                          },
+                          {
+                            "attributeName": "status",
+                            "keyType": "RANGE"
+                          }
+                        ],
+                        "attributeDefinitions": [
+                          {
+                            "attributeName": "paymentId",
+                            "attributeType": "S"
+                          },
+                          {
+                            "attributeName": "status",
+                            "attributeType": "S"
+                          }
+                        ],
+                        "billingMode": "PAY_PER_REQUEST",
+                        "pointInTimeRecoverySpecification": {
+                          "pointInTimeRecoveryEnabled": true
+                        },
+                        "tableName": "arn-aws-iam--305172134505-root-Test-Payments",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "Test"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "arn-aws-iam--305172134505-root"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "ScalingRole": {
+                    "id": "ScalingRole",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table/ScalingRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+                  "version": "2.50.0"
+                }
+              },
+              "Parameter_tableName": {
+                "id": "Parameter_tableName",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments/Parameter_tableName",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Payments/Parameter_tableName/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                      "aws:cdk:cloudformation:props": {
+                        "type": "String",
+                        "value": {
+                          "Ref": "PaymentsTable9E001CC6"
+                        },
+                        "name": "/sst/Test/arn-aws-iam--305172134505-root/Table/Payments/tableName",
+                        "tags": {
+                          "sst:app": "Test",
+                          "sst:stage": "arn-aws-iam--305172134505-root"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.173"
+            }
+          },
+          "Api": {
+            "id": "Api",
+            "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api",
+            "children": {
+              "Api": {
+                "id": "Api",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Api",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Api",
+                      "aws:cdk:cloudformation:props": {
+                        "corsConfiguration": {
+                          "allowCredentials": false,
+                          "allowHeaders": [
+                            "*"
+                          ],
+                          "allowMethods": [
+                            "*"
+                          ],
+                          "allowOrigins": [
+                            "*"
+                          ]
+                        },
+                        "name": "arn-aws-iam--305172134505-root-Test-Api",
+                        "protocolType": "HTTP",
+                        "tags": {
+                          "sst:app": "Test",
+                          "sst:stage": "arn-aws-iam--305172134505-root"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnApi",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "DefaultStage": {
+                    "id": "DefaultStage",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/DefaultStage",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/DefaultStage/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Stage",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "ApiCD79AAA0"
+                            },
+                            "stageName": "$default",
+                            "accessLogSettings": {
+                              "format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"httpMethod\":\"$context.httpMethod\",\"path\":\"$context.path\",\"routeKey\":\"$context.routeKey\",\"status\":$context.status,\"responseLatency\":$context.responseLatency,\"integrationRequestId\":\"$context.integration.requestId\",\"integrationStatus\":\"$context.integration.status\",\"integrationLatency\":\"$context.integration.latency\",\"integrationServiceStatus\":\"$context.integration.integrationStatus\",\"ip\":\"$context.identity.sourceIp\",\"userAgent\":\"$context.identity.userAgent\",\"cognitoIdentityId\":\"$context.identity.cognitoIdentityId\"}",
+                              "destinationArn": {
+                                "Fn::GetAtt": [
+                                  "ApiLogGroup1717FE17",
+                                  "Arn"
+                                ]
+                              }
+                            },
+                            "autoDeploy": true,
+                            "tags": {
+                              "sst:app": "Test",
+                              "sst:stage": "arn-aws-iam--305172134505-root"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnStage",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpStage",
+                      "version": "2.50.0-alpha.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpApi",
+                  "version": "2.50.0-alpha.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/LogGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/LogGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "logGroupName": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "/aws/vendedlogs/apis/arn-aws-iam--305172134505-root-Test-Api-",
+                              {
+                                "Ref": "ApiCD79AAA0"
+                              },
+                              "/default"
+                            ]
+                          ]
+                        },
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "Test"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "arn-aws-iam--305172134505-root"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                  "version": "2.50.0"
+                }
+              },
+              "Lambda_GET_--payment--all": {
+                "id": "Lambda_GET_--payment--all",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "Test"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "arn-aws-iam--305172134505-root"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "s3:*",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        "arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g",
+                                        "arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*"
+                                      ]
+                                    },
+                                    {
+                                      "Action": "dynamodb:*",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "PaymentsTable9E001CC6",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "PaymentsTable9E001CC6",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              "/*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461",
+                                "roles": [
+                                  {
+                                    "Ref": "ApiLambdaGETpaymentallServiceRole25A3FCC6"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-305172134505-ap-south-1",
+                          "s3Key": "c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "ApiLambdaGETpaymentallServiceRole25A3FCC6",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "SST_DEBUG_SRC_PATH": "services",
+                            "SST_DEBUG_SRC_HANDLER": "functions/payment.main",
+                            "SST_DEBUG_ENDPOINT": "wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root",
+                            "SST_DEBUG_BUCKET_NAME": "arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g",
+                            "SST_FUNCTION_ID": "arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "Test",
+                            "SST_STAGE": "arn-aws-iam--305172134505-root",
+                            "SST_Table_tableName_Payments": {
+                              "Ref": "PaymentsTable9E001CC6"
+                            },
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "index.main",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "Test"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "arn-aws-iam--305172134505-root"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "ApiLambdaGETpaymentall6E6FAF3E"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.50.0"
+                }
+              },
+              "Route_GET_--payment--all": {
+                "id": "Route_GET_--payment--all",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all",
+                "children": {
+                  "Integration_GET_--payment--all": {
+                    "id": "Integration_GET_--payment--all",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "ApiCD79AAA0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "ApiLambdaGETpaymentall6E6FAF3E",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.50.0-alpha.0"
+                    }
+                  },
+                  "Integration_GET_--payment--all-Permission": {
+                    "id": "Integration_GET_--payment--all-Permission",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "ApiLambdaGETpaymentall6E6FAF3E",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:ap-south-1:305172134505:",
+                              {
+                                "Ref": "ApiCD79AAA0"
+                              },
+                              "/*/*/payment/all"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "ApiCD79AAA0"
+                        },
+                        "routeKey": "GET /payment/all",
+                        "authorizationType": "NONE",
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.50.0-alpha.0"
+                }
+              },
+              "Lambda_GET_--check-status": {
+                "id": "Lambda_GET_--check-status",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "tags": [
+                              {
+                                "key": "sst:app",
+                                "value": "Test"
+                              },
+                              {
+                                "key": "sst:stage",
+                                "value": "arn-aws-iam--305172134505-root"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": "s3:*",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        "arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g",
+                                        "arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*"
+                                      ]
+                                    },
+                                    {
+                                      "Action": "dynamodb:*",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "PaymentsTable9E001CC6",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "PaymentsTable9E001CC6",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              "/*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1",
+                                "roles": [
+                                  {
+                                    "Ref": "ApiLambdaGETcheckstatusServiceRole0E99B268"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.50.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.50.0"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-305172134505-ap-south-1",
+                          "s3Key": "c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip"
+                        },
+                        "role": {
+                          "Fn::GetAtt": [
+                            "ApiLambdaGETcheckstatusServiceRole0E99B268",
+                            "Arn"
+                          ]
+                        },
+                        "environment": {
+                          "variables": {
+                            "SST_DEBUG_SRC_PATH": "services",
+                            "SST_DEBUG_SRC_HANDLER": "functions/lambda.main",
+                            "SST_DEBUG_ENDPOINT": "wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root",
+                            "SST_DEBUG_BUCKET_NAME": "arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g",
+                            "SST_FUNCTION_ID": "arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status",
+                            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                            "SST_APP": "Test",
+                            "SST_STAGE": "arn-aws-iam--305172134505-root",
+                            "SST_Table_tableName_Payments": {
+                              "Ref": "PaymentsTable9E001CC6"
+                            },
+                            "SST_DEBUG_IS_API_ROUTE": "1"
+                          }
+                        },
+                        "ephemeralStorage": {
+                          "size": 512
+                        },
+                        "handler": "index.main",
+                        "memorySize": 1024,
+                        "runtime": "nodejs16.x",
+                        "tags": [
+                          {
+                            "key": "sst:app",
+                            "value": "Test"
+                          },
+                          {
+                            "key": "sst:stage",
+                            "value": "arn-aws-iam--305172134505-root"
+                          }
+                        ],
+                        "timeout": 10,
+                        "tracingConfig": {
+                          "mode": "Active"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "EventInvokeConfig": {
+                    "id": "EventInvokeConfig",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/EventInvokeConfig",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/EventInvokeConfig/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::EventInvokeConfig",
+                          "aws:cdk:cloudformation:props": {
+                            "functionName": {
+                              "Ref": "ApiLambdaGETcheckstatusE6EF6F54"
+                            },
+                            "qualifier": "$LATEST",
+                            "maximumRetryAttempts": 0
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.50.0"
+                }
+              },
+              "Route_GET_--check-status": {
+                "id": "Route_GET_--check-status",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status",
+                "children": {
+                  "Integration_GET_--check-status": {
+                    "id": "Integration_GET_--check-status",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                          "aws:cdk:cloudformation:props": {
+                            "apiId": {
+                              "Ref": "ApiCD79AAA0"
+                            },
+                            "integrationType": "AWS_PROXY",
+                            "integrationUri": {
+                              "Fn::GetAtt": [
+                                "ApiLambdaGETcheckstatusE6EF6F54",
+                                "Arn"
+                              ]
+                            },
+                            "payloadFormatVersion": "2.0"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                          "version": "2.50.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                      "version": "2.50.0-alpha.0"
+                    }
+                  },
+                  "Integration_GET_--check-status-Permission": {
+                    "id": "Integration_GET_--check-status-Permission",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status-Permission",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "ApiLambdaGETcheckstatusE6EF6F54",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "apigateway.amazonaws.com",
+                        "sourceArn": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":execute-api:ap-south-1:305172134505:",
+                              {
+                                "Ref": "ApiCD79AAA0"
+                              },
+                              "/*/*/check-status"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.50.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Ref": "ApiCD79AAA0"
+                        },
+                        "routeKey": "GET /check-status",
+                        "authorizationType": "NONE",
+                        "target": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "integrations/",
+                              {
+                                "Ref": "ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9"
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                  "version": "2.50.0-alpha.0"
+                }
+              },
+              "Parameter_url": {
+                "id": "Parameter_url",
+                "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Parameter_url",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "arn-aws-iam--305172134505-root-Test-MyStack/Api/Parameter_url/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                      "aws:cdk:cloudformation:props": {
+                        "type": "String",
+                        "value": {
+                          "Fn::GetAtt": [
+                            "ApiCD79AAA0",
+                            "ApiEndpoint"
+                          ]
+                        },
+                        "name": "/sst/Test/arn-aws-iam--305172134505-root/Api/Api/url",
+                        "tags": {
+                          "sst:app": "Test",
+                          "sst:stage": "arn-aws-iam--305172134505-root"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ssm.CfnParameter",
+                      "version": "2.50.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ssm.StringParameter",
+                  "version": "2.50.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.173"
+            }
+          },
+          "ApiEndpoint": {
+            "id": "ApiEndpoint",
+            "path": "arn-aws-iam--305172134505-root-Test-MyStack/ApiEndpoint",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.50.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.50.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.50.0"
+    }
+  }
+}

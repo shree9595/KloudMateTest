@@ -1,0 +1,2 @@
+{"id":"arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all","handler":"functions/payment.main","runtime":"nodejs16.x","srcPath":"services","bundle":{"format":"esm"},"root":"C:\\Users\\ShRee\\Desktop\\Test\\Dynamodb"}
+{"id":"arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status","handler":"functions/lambda.main","runtime":"nodejs16.x","srcPath":"services","bundle":{"format":"esm"},"root":"C:\\Users\\ShRee\\Desktop\\Test\\Dynamodb"}

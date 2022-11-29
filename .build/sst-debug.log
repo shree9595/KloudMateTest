@@ -1,0 +1,2752 @@
+[2022-11-29T17:35:56.638] [DEBUG] default - SST: 1.18.4
+[2022-11-29T17:35:56.641] [DEBUG] default - CDK: 2.50.0
+[2022-11-29T17:35:56.654] [DEBUG] aws-auth - Determining if we're on an EC2 instance.
+[2022-11-29T17:35:56.793] [DEBUG] aws-auth - Does not look like an EC2 instance.
+[2022-11-29T17:35:56.891] [INFO] default - Using stage: arn-aws-iam--305172134505-root
+[2022-11-29T17:35:56.896] [INFO] default - [90mPreparing your SST app[39m
+[2022-11-29T17:35:57.565] [INFO] default - 
+[2022-11-29T17:35:57.566] [INFO] default - =======================
+[2022-11-29T17:35:57.568] [INFO] default -  Deploying debug stack
+[2022-11-29T17:35:57.570] [INFO] default - =======================
+[2022-11-29T17:35:57.572] [INFO] default - 
+[2022-11-29T17:35:57.574] [DEBUG] default - synth {
+  app: 'node bin/index.mjs Test arn-aws-iam--305172134505-root ap-south-1 "C:\\Users\\ShRee\\Desktop\\Test\\Dynamodb"',
+  output: 'cdk.out',
+  rollback: true,
+  roleArn: undefined,
+  verbose: 0,
+  noColor: false
+}
+[2022-11-29T17:36:09.026] [TRACE] cdk - 
+
+[2022-11-29T17:36:09.096] [INFO] default - [90mDeploying stacks[39m
+[2022-11-29T17:36:09.100] [DEBUG] default - checkInReviewBootstrapStacks
+[2022-11-29T17:36:09.101] [DEBUG] default - checkInReviewBootstrapStackInRegion ap-south-1
+[2022-11-29T17:36:10.381] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-debug-stack","name":"arn-aws-iam--305172134505-root-Test-debug-stack","status":"pending","dependencies":[],"region":"ap-south-1","events":[]}]
+[2022-11-29T17:36:10.382] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-debug-stack","name":"arn-aws-iam--305172134505-root-Test-debug-stack","status":"pending","dependencies":[],"region":"ap-south-1","events":[]}]
+[2022-11-29T17:36:10.384] [DEBUG] default - deploy stack: started arn-aws-iam--305172134505-root-Test-debug-stack
+[2022-11-29T17:36:10.385] [DEBUG] default - deploy stack: get pre-deploy status
+[2022-11-29T17:36:10.549] [DEBUG] default - deploy stack: get pre-deploy status: {
+  StackStatus: 'CREATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T09:25:40.783Z
+}
+[2022-11-29T17:36:10.551] [DEBUG] default - deploy stack: addInUseExports
+[2022-11-29T17:36:10.554] [DEBUG] default - deploy stack: isTemplateChanged
+[2022-11-29T17:36:10.958] [DEBUG] default - Resources:
+  TableCD117FA1:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Table/Resource
+  Bucket83908E77:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - ExpirationInDays: 1
+            Prefix: payloads/
+            Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: aws-cdk:auto-delete-objects
+          Value: 'true'
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/Resource
+  BucketPolicyE9A3008A:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: Bucket83908E77
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetBucket*
+              - s3:List*
+              - s3:DeleteObject*
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::GetAtt:
+                  - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+                  - Arn
+            Resource:
+              - Fn::GetAtt:
+                  - Bucket83908E77
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - Bucket83908E77
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/Policy/Resource
+  BucketAutoDeleteObjectsCustomResourceBAFD23C2:
+    Type: Custom::S3AutoDeleteObjects
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F
+          - Arn
+      BucketName:
+        Ref: Bucket83908E77
+    DependsOn:
+      - BucketPolicyE9A3008A
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/AutoDeleteObjectsCustomResource/Default
+  CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - Fn::Sub: >-
+            arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role
+  CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 3f51abb709b8e65167a45aeed02bab11540603d909005d7148230ba5ce6c74d7.zip
+      Timeout: 900
+      MemorySize: 128
+      Handler: __entrypoint__.handler
+      Role:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+          - Arn
+      Runtime: nodejs14.x
+      Description:
+        Fn::Join:
+          - ''
+          - - 'Lambda function for auto-deleting objects in '
+            - Ref: Bucket83908E77
+            - ' S3 bucket.'
+    DependsOn:
+      - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler
+      aws:asset:path: asset.3f51abb709b8e65167a45aeed02bab11540603d909005d7148230ba5ce6c74d7
+      aws:asset:property: Code
+  Api:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: arn-aws-iam--305172134505-root-Test-debug-stack-api
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: $request.body.action
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Api
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId:
+        Ref: Api
+      StageName: arn-aws-iam--305172134505-root
+      AutoDeploy: true
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ApiStage
+  ConnectServiceRole07B61CE8:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ServiceRole/Resource
+  ConnectServiceRoleDefaultPolicyCE008EDB:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: ConnectServiceRoleDefaultPolicyCE008EDB
+      Roles:
+        - Ref: ConnectServiceRole07B61CE8
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ServiceRole/DefaultPolicy/Resource
+  Connect5B7625CA:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - ConnectServiceRole07B61CE8
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsConnect.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - ConnectServiceRoleDefaultPolicyCE008EDB
+      - ConnectServiceRole07B61CE8
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Connect/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ConnectLogRetentionC1F463CD:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Connect5B7625CA
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/LogRetention/Resource
+  ConnectConnectPermission9DBC7813:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Connect5B7625CA
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ConnectPermission
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:PutRetentionPolicy
+              - logs:DeleteRetentionPolicy
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: >-
+        LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB
+      Roles:
+        - Ref: LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip
+      Role:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+          - Arn
+    DependsOn:
+      - >-
+        LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB
+      - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource
+      aws:asset:path: asset.eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ConnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Connect5B7625CA
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ConnectIntegration
+  ConnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $connect
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ConnectIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ConnectRoute
+  DisconnectServiceRole90AEC2EB:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/ServiceRole/Resource
+  DisconnectServiceRoleDefaultPolicy32856207:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: DisconnectServiceRoleDefaultPolicy32856207
+      Roles:
+        - Ref: DisconnectServiceRole90AEC2EB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/ServiceRole/DefaultPolicy/Resource
+  Disconnect7D6B12BD:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - DisconnectServiceRole90AEC2EB
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsDisconnect.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - DisconnectServiceRoleDefaultPolicy32856207
+      - DisconnectServiceRole90AEC2EB
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  DisconnectLogRetentionE61D7937:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Disconnect7D6B12BD
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/LogRetention/Resource
+  DisconnectDisconnectPermission933E876E:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Disconnect7D6B12BD
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/DisconnectPermission
+  DisconnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Disconnect7D6B12BD
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DisconnectIntegration
+  DisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $disconnect
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: DisconnectIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DisconnectRoute
+  ServiceRole4288B192:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/ServiceRole/Resource
+  ServiceRoleDefaultPolicy94CF55F6:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: ServiceRoleDefaultPolicy94CF55F6
+      Roles:
+        - Ref: ServiceRole4288B192
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/ServiceRole/DefaultPolicy/Resource
+  Resource:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - ServiceRole4288B192
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsDefault.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - ServiceRoleDefaultPolicy94CF55F6
+      - ServiceRole4288B192
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Default/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  LogRetentionDD0A1FA1:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Resource
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/LogRetention/Resource
+  DefaultPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Resource
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/DefaultPermission
+  DefaultIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Resource
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DefaultIntegration
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $default
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: DefaultIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DefaultRoute
+Outputs:
+  Endpoint:
+    Value:
+      Fn::Join:
+        - ''
+        - - Fn::GetAtt:
+              - Api
+              - ApiEndpoint
+          - /arn-aws-iam--305172134505-root
+  BucketArn:
+    Value:
+      Fn::GetAtt:
+        - Bucket83908E77
+        - Arn
+  BucketName:
+    Value:
+      Ref: Bucket83908E77
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: >-
+      Version of the CDK Bootstrap resources in this environment, automatically
+      retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                  - '5'
+                - Ref: BootstrapVersion
+        AssertDescription: >-
+          CDK bootstrap stack version 6 required. Please run 'cdk bootstrap'
+          with a recent version of the CDK CLI.
+
+[2022-11-29T17:36:10.960] [DEBUG] default - Resources:
+  TableCD117FA1:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Table/Resource
+  Bucket83908E77:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - ExpirationInDays: 1
+            Prefix: payloads/
+            Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: aws-cdk:auto-delete-objects
+          Value: 'true'
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/Resource
+  BucketPolicyE9A3008A:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: Bucket83908E77
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetBucket*
+              - s3:List*
+              - s3:DeleteObject*
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::GetAtt:
+                  - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+                  - Arn
+            Resource:
+              - Fn::GetAtt:
+                  - Bucket83908E77
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - Bucket83908E77
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/Policy/Resource
+  BucketAutoDeleteObjectsCustomResourceBAFD23C2:
+    Type: Custom::S3AutoDeleteObjects
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F
+          - Arn
+      BucketName:
+        Ref: Bucket83908E77
+    DependsOn:
+      - BucketPolicyE9A3008A
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Bucket/AutoDeleteObjectsCustomResource/Default
+  CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - Fn::Sub: >-
+            arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role
+  CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 3f51abb709b8e65167a45aeed02bab11540603d909005d7148230ba5ce6c74d7.zip
+      Timeout: 900
+      MemorySize: 128
+      Handler: __entrypoint__.handler
+      Role:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+          - Arn
+      Runtime: nodejs14.x
+      Description:
+        Fn::Join:
+          - ''
+          - - 'Lambda function for auto-deleting objects in '
+            - Ref: Bucket83908E77
+            - ' S3 bucket.'
+    DependsOn:
+      - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler
+      aws:asset:path: asset.3f51abb709b8e65167a45aeed02bab11540603d909005d7148230ba5ce6c74d7
+      aws:asset:property: Code
+  Api:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: arn-aws-iam--305172134505-root-Test-debug-stack-api
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: $request.body.action
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Api
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId:
+        Ref: Api
+      StageName: arn-aws-iam--305172134505-root
+      AutoDeploy: true
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ApiStage
+  ConnectServiceRole07B61CE8:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ServiceRole/Resource
+  ConnectServiceRoleDefaultPolicyCE008EDB:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: ConnectServiceRoleDefaultPolicyCE008EDB
+      Roles:
+        - Ref: ConnectServiceRole07B61CE8
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ServiceRole/DefaultPolicy/Resource
+  Connect5B7625CA:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - ConnectServiceRole07B61CE8
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsConnect.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - ConnectServiceRoleDefaultPolicyCE008EDB
+      - ConnectServiceRole07B61CE8
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Connect/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ConnectLogRetentionC1F463CD:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Connect5B7625CA
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/LogRetention/Resource
+  ConnectConnectPermission9DBC7813:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Connect5B7625CA
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Connect/ConnectPermission
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:PutRetentionPolicy
+              - logs:DeleteRetentionPolicy
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: >-
+        LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB
+      Roles:
+        - Ref: LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource
+  LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip
+      Role:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+          - Arn
+    DependsOn:
+      - >-
+        LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB
+      - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource
+      aws:asset:path: asset.eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ConnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Connect5B7625CA
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ConnectIntegration
+  ConnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $connect
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ConnectIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/ConnectRoute
+  DisconnectServiceRole90AEC2EB:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/ServiceRole/Resource
+  DisconnectServiceRoleDefaultPolicy32856207:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: DisconnectServiceRoleDefaultPolicy32856207
+      Roles:
+        - Ref: DisconnectServiceRole90AEC2EB
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/ServiceRole/DefaultPolicy/Resource
+  Disconnect7D6B12BD:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - DisconnectServiceRole90AEC2EB
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsDisconnect.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - DisconnectServiceRoleDefaultPolicy32856207
+      - DisconnectServiceRole90AEC2EB
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  DisconnectLogRetentionE61D7937:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Disconnect7D6B12BD
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/LogRetention/Resource
+  DisconnectDisconnectPermission933E876E:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Disconnect7D6B12BD
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Disconnect/DisconnectPermission
+  DisconnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Disconnect7D6B12BD
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DisconnectIntegration
+  DisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $disconnect
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: DisconnectIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DisconnectRoute
+  ServiceRole4288B192:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/ServiceRole/Resource
+  ServiceRoleDefaultPolicy94CF55F6:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - apigateway:*
+              - dynamodb:*
+              - execute-api:ManageConnections
+            Effect: Allow
+            Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: ServiceRoleDefaultPolicy94CF55F6
+      Roles:
+        - Ref: ServiceRole4288B192
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/ServiceRole/DefaultPolicy/Resource
+  Resource:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4.zip
+      Role:
+        Fn::GetAtt:
+          - ServiceRole4288B192
+          - Arn
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TableCD117FA1
+      Handler: wsDefault.main
+      MemorySize: 256
+      Runtime: nodejs16.x
+      Timeout: 10
+    DependsOn:
+      - ServiceRoleDefaultPolicy94CF55F6
+      - ServiceRole4288B192
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/Default/Resource
+      aws:asset:path: asset.0d89df84ea307d9cb0d70fbd76481e4e86f449d075a2a082cc2d323ee69a98e4
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  LogRetentionDD0A1FA1:
+    Type: Custom::LogRetention
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A
+          - Arn
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/lambda/
+            - Ref: Resource
+      RetentionInDays: 7
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/LogRetention/Resource
+  DefaultPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - Resource
+          - Arn
+      Principal: apigateway.amazonaws.com
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-debug-stack/Default/DefaultPermission
+  DefaultIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: Api
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:ap-south-1:lambda:path/2015-03-31/functions/'
+            - Fn::GetAtt:
+                - Resource
+                - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DefaultIntegration
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: Api
+      RouteKey: $default
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: DefaultIntegration
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-debug-stack/DefaultRoute
+Outputs:
+  Endpoint:
+    Value:
+      Fn::Join:
+        - ''
+        - - Fn::GetAtt:
+              - Api
+              - ApiEndpoint
+          - /arn-aws-iam--305172134505-root
+  BucketArn:
+    Value:
+      Fn::GetAtt:
+        - Bucket83908E77
+        - Arn
+  BucketName:
+    Value:
+      Ref: Bucket83908E77
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: >-
+      Version of the CDK Bootstrap resources in this environment, automatically
+      retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                  - '5'
+                - Ref: BootstrapVersion
+        AssertDescription: >-
+          CDK bootstrap stack version 6 required. Please run 'cdk bootstrap'
+          with a recent version of the CDK CLI.
+
+[2022-11-29T17:36:10.961] [DEBUG] default - deploy stack: isTemplateChanged: unchanged
+[2022-11-29T17:36:10.963] [DEBUG] default - deploy stack: done arn-aws-iam--305172134505-root-Test-debug-stack {
+  status: 'unchanged',
+  statusReason: undefined,
+  account: '305172134505',
+  outputs: {
+    BucketArn: 'arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g',
+    BucketName: 'arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g',
+    Endpoint: 'wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root'
+  },
+  exports: {}
+}
+[2022-11-29T17:36:10.965] [INFO] default - [32m[39m
+[32m ✅  arn-aws-iam--305172134505-root-Test-debug-stack (no changes)[39m
+[32m[39m
+[2022-11-29T17:36:10.967] [DEBUG] default - At least 1 stack successfully deployed, call deployStacks() again
+[2022-11-29T17:36:10.968] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-debug-stack","name":"arn-aws-iam--305172134505-root-Test-debug-stack","status":"unchanged","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723570965,"endedAt":1669723570965,"events":[],"outputs":{"BucketArn":"arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g","BucketName":"arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g","Endpoint":"wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root"},"exports":{}}]
+[2022-11-29T17:36:10.971] [INFO] default - 
+Stack arn-aws-iam--305172134505-root-Test-debug-stack
+[2022-11-29T17:36:10.972] [INFO] default -   Status: no changes
+[2022-11-29T17:36:10.974] [INFO] default -   Outputs:
+[2022-11-29T17:36:10.976] [INFO] default -     BucketArn: arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+[2022-11-29T17:36:10.978] [INFO] default -     BucketName: arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+[2022-11-29T17:36:10.981] [INFO] default -     Endpoint: wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root
+[2022-11-29T17:36:10.983] [INFO] default - 
+[2022-11-29T17:36:10.984] [DEBUG] default - deployRet [
+  {
+    id: 'arn-aws-iam--305172134505-root-Test-debug-stack',
+    name: 'arn-aws-iam--305172134505-root-Test-debug-stack',
+    region: 'ap-south-1',
+    status: 'unchanged',
+    errorHelper: undefined,
+    errorMessage: undefined,
+    outputs: {
+      BucketArn: 'arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g',
+      BucketName: 'arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g',
+      Endpoint: 'wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root'
+    },
+    exports: {}
+  }
+]
+[2022-11-29T17:36:10.986] [INFO] default - 
+[2022-11-29T17:36:10.988] [INFO] default - ===============
+[2022-11-29T17:36:10.989] [INFO] default -  Deploying app
+[2022-11-29T17:36:10.990] [INFO] default - ===============
+[2022-11-29T17:36:10.992] [INFO] default - 
+[2022-11-29T17:36:10.995] [DEBUG] default - synth {
+  app: 'node .build/run.mjs',
+  output: '.build/cdk.out',
+  rollback: true,
+  roleArn: undefined,
+  verbose: 0,
+  noColor: false
+}
+[2022-11-29T17:36:23.430] [DEBUG] defer-builder - CPU cores 8
+[2022-11-29T17:36:23.449] [TRACE] cdk - 
+WARNING: Passing SST constructs into "permissions" is deprecated, and will be removed in SST v2. Pass them into the "bind" prop. Read about how to upgrade here — https://docs.sst.dev/upgrade-guide#upgrade-to-v116
+
+[2022-11-29T17:36:23.448] [WARN] default - 
+WARNING: Passing SST constructs into "permissions" is deprecated, and will be removed in SST v2. Pass them into the "bind" prop. Read about how to upgrade here — https://docs.sst.dev/upgrade-guide#upgrade-to-v116
+[2022-11-29T17:36:23.771] [TRACE] cdk - 
+
+[2022-11-29T17:36:23.838] [INFO] default - [90mDeploying stacks[39m
+[2022-11-29T17:36:23.840] [DEBUG] default - checkInReviewBootstrapStacks
+[2022-11-29T17:36:23.841] [DEBUG] default - checkInReviewBootstrapStackInRegion ap-south-1
+[2022-11-29T17:36:24.001] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"pending","dependencies":[],"region":"ap-south-1","events":[]}]
+[2022-11-29T17:36:24.002] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"pending","dependencies":[],"region":"ap-south-1","events":[]}]
+[2022-11-29T17:36:24.003] [DEBUG] default - deploy stack: started arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:36:24.004] [DEBUG] default - deploy stack: get pre-deploy status
+[2022-11-29T17:36:24.179] [DEBUG] default - deploy stack: get pre-deploy status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:24.180] [DEBUG] default - deploy stack: addInUseExports
+[2022-11-29T17:36:24.183] [DEBUG] default - deploy stack: isTemplateChanged
+[2022-11-29T17:36:24.528] [DEBUG] default - Resources:
+  CustomResourceHandlerServiceRole41AEC181:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/Resource
+  CustomResourceHandlerServiceRoleDefaultPolicy73F93F56:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:PutObject
+              - s3:DeleteObject
+            Effect: Allow
+            Resource: arn:aws:s3:::sstbootstrap-apsouth10677a8a5-q5ecp1blqkqt/*
+          - Action:
+              - ssm:GetParametersByPath
+              - ssm:PutParameter
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/arn-aws-iam--305172134505-root/*
+              - >-
+                arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/.fallback/*
+          - Action:
+              - ssm:GetParameter
+              - ssm:PutParameter
+              - ssm:DeleteParameter
+            Effect: Allow
+            Resource: arn:aws:ssm:ap-south-1:305172134505:parameter/*
+        Version: '2012-10-17'
+      PolicyName: CustomResourceHandlerServiceRoleDefaultPolicy73F93F56
+      Roles:
+        - Ref: CustomResourceHandlerServiceRole41AEC181
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/DefaultPolicy/Resource
+  CustomResourceHandlerE8FB56BA:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47.zip
+      Role:
+        Fn::GetAtt:
+          - CustomResourceHandlerServiceRole41AEC181
+          - Arn
+      Handler: index.handler
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 900
+    DependsOn:
+      - CustomResourceHandlerServiceRoleDefaultPolicy73F93F56
+      - CustomResourceHandlerServiceRole41AEC181
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Resource
+      aws:asset:path: asset.377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  StackMetadata:
+    Type: Custom::StackMetadata
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - CustomResourceHandlerE8FB56BA
+          - Arn
+      App: Test
+      Stage: arn-aws-iam--305172134505-root
+      Stack: arn-aws-iam--305172134505-root-Test-MyStack
+      SSTVersion: 1.18.4
+      BootstrapBucketName: sstbootstrap-apsouth10677a8a5-q5ecp1blqkqt
+      Metadata:
+        - id: Payments
+          addr: c8ba80fead26d1ff0916805acb9ac29811bb9c9e7f
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Table
+          data:
+            tableName:
+              Ref: PaymentsTable9E001CC6
+            consumers: []
+        - id: Api
+          addr: c89110fc63aa89aa457990df97fbfd0ae9683ed6a1
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Api
+          data:
+            graphql: false
+            url:
+              Fn::Join:
+                - ''
+                - - https://
+                  - Ref: ApiCD79AAA0
+                  - .execute-api.ap-south-1.
+                  - Ref: AWS::URLSuffix
+                  - /
+            httpApiId:
+              Ref: ApiCD79AAA0
+            routes:
+              - type: function
+                route: GET /payment/all
+                fn:
+                  node: c88f13f42ae78f4cffc8006f0382b11b6e20a3070d
+                  stack: arn-aws-iam--305172134505-root-Test-MyStack
+              - type: function
+                route: GET /check-status
+                fn:
+                  node: c8c07aa49b81071b8eb196cf783a4469a7fb48ac57
+                  stack: arn-aws-iam--305172134505-root-Test-MyStack
+        - id: Lambda_GET_--payment--all
+          addr: c88f13f42ae78f4cffc8006f0382b11b6e20a3070d
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Function
+          data:
+            localId: >-
+              arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all
+            arn:
+              Fn::GetAtt:
+                - ApiLambdaGETpaymentall6E6FAF3E
+                - Arn
+            secrets: []
+        - id: Lambda_GET_--check-status
+          addr: c8c07aa49b81071b8eb196cf783a4469a7fb48ac57
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Function
+          data:
+            localId: >-
+              arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status
+            arn:
+              Fn::GetAtt:
+                - ApiLambdaGETcheckstatusE6EF6F54
+                - Arn
+            secrets: []
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/StackMetadata/Default
+  PaymentsTable9E001CC6:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+        - AttributeName: paymentId
+          KeyType: HASH
+        - AttributeName: status
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: paymentId
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      TableName: arn-aws-iam--305172134505-root-Test-Payments
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table/Resource
+  PaymentsParametertableName29654464:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value:
+        Ref: PaymentsTable9E001CC6
+      Name: /sst/Test/arn-aws-iam--305172134505-root/Table/Payments/tableName
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Payments/Parameter_tableName/Resource
+  ApiCD79AAA0:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      CorsConfiguration:
+        AllowCredentials: false
+        AllowHeaders:
+          - '*'
+        AllowMethods:
+          - '*'
+        AllowOrigins:
+          - '*'
+      Name: arn-aws-iam--305172134505-root-Test-Api
+      ProtocolType: HTTP
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/Resource
+  ApiDefaultStage1AAE989B:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      StageName: $default
+      AccessLogSettings:
+        DestinationArn:
+          Fn::GetAtt:
+            - ApiLogGroup1717FE17
+            - Arn
+        Format: >-
+          {"requestTime":"$context.requestTime","requestId":"$context.requestId","httpMethod":"$context.httpMethod","path":"$context.path","routeKey":"$context.routeKey","status":$context.status,"responseLatency":$context.responseLatency,"integrationRequestId":"$context.integration.requestId","integrationStatus":"$context.integration.status","integrationLatency":"$context.integration.latency","integrationServiceStatus":"$context.integration.integrationStatus","ip":"$context.identity.sourceIp","userAgent":"$context.identity.userAgent","cognitoIdentityId":"$context.identity.cognitoIdentityId"}
+      AutoDeploy: true
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/DefaultStage/Resource
+  ApiLogGroup1717FE17:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/vendedlogs/apis/arn-aws-iam--305172134505-root-Test-Api-
+            - Ref: ApiCD79AAA0
+            - /default
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/LogGroup/Resource
+  ApiLambdaGETpaymentallServiceRole25A3FCC6:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/Resource
+  ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - xray:PutTraceSegments
+              - xray:PutTelemetryRecords
+            Effect: Allow
+            Resource: '*'
+          - Action: s3:*
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*
+          - Action: dynamodb:*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - PaymentsTable9E001CC6
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - PaymentsTable9E001CC6
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+      PolicyName: ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461
+      Roles:
+        - Ref: ApiLambdaGETpaymentallServiceRole25A3FCC6
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/DefaultPolicy/Resource
+  ApiLambdaGETpaymentall6E6FAF3E:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      Role:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentallServiceRole25A3FCC6
+          - Arn
+      Environment:
+        Variables:
+          SST_DEBUG_SRC_PATH: services
+          SST_DEBUG_SRC_HANDLER: functions/peyment.main
+          SST_DEBUG_ENDPOINT: >-
+            wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root
+          SST_DEBUG_BUCKET_NAME: arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+          SST_FUNCTION_ID: >-
+            arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+          SST_APP: Test
+          SST_STAGE: arn-aws-iam--305172134505-root
+          SST_Table_tableName_Payments:
+            Ref: PaymentsTable9E001CC6
+          SST_DEBUG_IS_API_ROUTE: '1'
+      EphemeralStorage:
+        Size: 512
+      Handler: index.main
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 10
+      TracingConfig:
+        Mode: Active
+    DependsOn:
+      - ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461
+      - ApiLambdaGETpaymentallServiceRole25A3FCC6
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Resource
+      aws:asset:path: >-
+        asset.c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ApiLambdaGETpaymentallEventInvokeConfigAE9B116A:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: ApiLambdaGETpaymentall6E6FAF3E
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/EventInvokeConfig/Resource
+  ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentall6E6FAF3E
+          - Arn
+      PayloadFormatVersion: '2.0'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all/Resource
+  ApiRouteGETpaymentallIntegrationGETpaymentallPermission83431E03:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentall6E6FAF3E
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':execute-api:ap-south-1:305172134505:'
+            - Ref: ApiCD79AAA0
+            - /*/*/payment/all
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all-Permission
+  ApiRouteGETpaymentall0B767E83:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      RouteKey: GET /payment/all
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Resource
+  ApiLambdaGETcheckstatusServiceRole0E99B268:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/Resource
+  ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - xray:PutTraceSegments
+              - xray:PutTelemetryRecords
+            Effect: Allow
+            Resource: '*'
+          - Action: s3:*
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*
+          - Action: dynamodb:*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - PaymentsTable9E001CC6
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - PaymentsTable9E001CC6
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+      PolicyName: ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1
+      Roles:
+        - Ref: ApiLambdaGETcheckstatusServiceRole0E99B268
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/DefaultPolicy/Resource
+  ApiLambdaGETcheckstatusE6EF6F54:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      Role:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusServiceRole0E99B268
+          - Arn
+      Environment:
+        Variables:
+          SST_DEBUG_SRC_PATH: services
+          SST_DEBUG_SRC_HANDLER: functions/lambda.main
+          SST_DEBUG_ENDPOINT: >-
+            wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root
+          SST_DEBUG_BUCKET_NAME: arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+          SST_FUNCTION_ID: >-
+            arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+          SST_APP: Test
+          SST_STAGE: arn-aws-iam--305172134505-root
+          SST_Table_tableName_Payments:
+            Ref: PaymentsTable9E001CC6
+          SST_DEBUG_IS_API_ROUTE: '1'
+      EphemeralStorage:
+        Size: 512
+      Handler: index.main
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 10
+      TracingConfig:
+        Mode: Active
+    DependsOn:
+      - ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1
+      - ApiLambdaGETcheckstatusServiceRole0E99B268
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Resource
+      aws:asset:path: >-
+        asset.c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ApiLambdaGETcheckstatusEventInvokeConfig388A3269:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: ApiLambdaGETcheckstatusE6EF6F54
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/EventInvokeConfig/Resource
+  ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusE6EF6F54
+          - Arn
+      PayloadFormatVersion: '2.0'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status/Resource
+  ApiRouteGETcheckstatusIntegrationGETcheckstatusPermission85D7A6BD:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusE6EF6F54
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':execute-api:ap-south-1:305172134505:'
+            - Ref: ApiCD79AAA0
+            - /*/*/check-status
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status-Permission
+  ApiRouteGETcheckstatus2D9C3AF0:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      RouteKey: GET /check-status
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Resource
+  ApiParameterurl09B86AB9:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value:
+        Fn::GetAtt:
+          - ApiCD79AAA0
+          - ApiEndpoint
+      Name: /sst/Test/arn-aws-iam--305172134505-root/Api/Api/url
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/Parameter_url/Resource
+Outputs:
+  ApiEndpoint:
+    Value:
+      Fn::GetAtt:
+        - ApiCD79AAA0
+        - ApiEndpoint
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: >-
+      Version of the CDK Bootstrap resources in this environment, automatically
+      retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                  - '5'
+                - Ref: BootstrapVersion
+        AssertDescription: >-
+          CDK bootstrap stack version 6 required. Please run 'cdk bootstrap'
+          with a recent version of the CDK CLI.
+
+[2022-11-29T17:36:24.529] [DEBUG] default - Resources:
+  CustomResourceHandlerServiceRole41AEC181:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/Resource
+  CustomResourceHandlerServiceRoleDefaultPolicy73F93F56:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:PutObject
+              - s3:DeleteObject
+            Effect: Allow
+            Resource: arn:aws:s3:::sstbootstrap-apsouth10677a8a5-q5ecp1blqkqt/*
+          - Action:
+              - ssm:GetParametersByPath
+              - ssm:PutParameter
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/arn-aws-iam--305172134505-root/*
+              - >-
+                arn:aws:ssm:ap-south-1:305172134505:parameter/sst/Test/.fallback/*
+          - Action:
+              - ssm:GetParameter
+              - ssm:PutParameter
+              - ssm:DeleteParameter
+            Effect: Allow
+            Resource: arn:aws:ssm:ap-south-1:305172134505:parameter/*
+        Version: '2012-10-17'
+      PolicyName: CustomResourceHandlerServiceRoleDefaultPolicy73F93F56
+      Roles:
+        - Ref: CustomResourceHandlerServiceRole41AEC181
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/DefaultPolicy/Resource
+  CustomResourceHandlerE8FB56BA:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47.zip
+      Role:
+        Fn::GetAtt:
+          - CustomResourceHandlerServiceRole41AEC181
+          - Arn
+      Handler: index.handler
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 900
+    DependsOn:
+      - CustomResourceHandlerServiceRoleDefaultPolicy73F93F56
+      - CustomResourceHandlerServiceRole41AEC181
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Resource
+      aws:asset:path: asset.377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  StackMetadata:
+    Type: Custom::StackMetadata
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - CustomResourceHandlerE8FB56BA
+          - Arn
+      App: Test
+      Stage: arn-aws-iam--305172134505-root
+      Stack: arn-aws-iam--305172134505-root-Test-MyStack
+      SSTVersion: 1.18.4
+      BootstrapBucketName: sstbootstrap-apsouth10677a8a5-q5ecp1blqkqt
+      Metadata:
+        - id: Payments
+          addr: c8ba80fead26d1ff0916805acb9ac29811bb9c9e7f
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Table
+          data:
+            tableName:
+              Ref: PaymentsTable9E001CC6
+            consumers: []
+        - id: Api
+          addr: c89110fc63aa89aa457990df97fbfd0ae9683ed6a1
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Api
+          data:
+            graphql: false
+            url:
+              Fn::Join:
+                - ''
+                - - https://
+                  - Ref: ApiCD79AAA0
+                  - .execute-api.ap-south-1.
+                  - Ref: AWS::URLSuffix
+                  - /
+            httpApiId:
+              Ref: ApiCD79AAA0
+            routes:
+              - type: function
+                route: GET /payment/all
+                fn:
+                  node: c88f13f42ae78f4cffc8006f0382b11b6e20a3070d
+                  stack: arn-aws-iam--305172134505-root-Test-MyStack
+              - type: function
+                route: GET /check-status
+                fn:
+                  node: c8c07aa49b81071b8eb196cf783a4469a7fb48ac57
+                  stack: arn-aws-iam--305172134505-root-Test-MyStack
+        - id: Lambda_GET_--payment--all
+          addr: c88f13f42ae78f4cffc8006f0382b11b6e20a3070d
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Function
+          data:
+            localId: >-
+              arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all
+            arn:
+              Fn::GetAtt:
+                - ApiLambdaGETpaymentall6E6FAF3E
+                - Arn
+            secrets: []
+        - id: Lambda_GET_--check-status
+          addr: c8c07aa49b81071b8eb196cf783a4469a7fb48ac57
+          stack: arn-aws-iam--305172134505-root-Test-MyStack
+          type: Function
+          data:
+            localId: >-
+              arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status
+            arn:
+              Fn::GetAtt:
+                - ApiLambdaGETcheckstatusE6EF6F54
+                - Arn
+            secrets: []
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/StackMetadata/Default
+  PaymentsTable9E001CC6:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+        - AttributeName: paymentId
+          KeyType: HASH
+        - AttributeName: status
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: paymentId
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      TableName: arn-aws-iam--305172134505-root-Test-Payments
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table/Resource
+  PaymentsParametertableName29654464:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value:
+        Ref: PaymentsTable9E001CC6
+      Name: /sst/Test/arn-aws-iam--305172134505-root/Table/Payments/tableName
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Payments/Parameter_tableName/Resource
+  ApiCD79AAA0:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      CorsConfiguration:
+        AllowCredentials: false
+        AllowHeaders:
+          - '*'
+        AllowMethods:
+          - '*'
+        AllowOrigins:
+          - '*'
+      Name: arn-aws-iam--305172134505-root-Test-Api
+      ProtocolType: HTTP
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/Resource
+  ApiDefaultStage1AAE989B:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      StageName: $default
+      AccessLogSettings:
+        DestinationArn:
+          Fn::GetAtt:
+            - ApiLogGroup1717FE17
+            - Arn
+        Format: >-
+          {"requestTime":"$context.requestTime","requestId":"$context.requestId","httpMethod":"$context.httpMethod","path":"$context.path","routeKey":"$context.routeKey","status":$context.status,"responseLatency":$context.responseLatency,"integrationRequestId":"$context.integration.requestId","integrationStatus":"$context.integration.status","integrationLatency":"$context.integration.latency","integrationServiceStatus":"$context.integration.integrationStatus","ip":"$context.identity.sourceIp","userAgent":"$context.identity.userAgent","cognitoIdentityId":"$context.identity.cognitoIdentityId"}
+      AutoDeploy: true
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/DefaultStage/Resource
+  ApiLogGroup1717FE17:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Join:
+          - ''
+          - - /aws/vendedlogs/apis/arn-aws-iam--305172134505-root-Test-Api-
+            - Ref: ApiCD79AAA0
+            - /default
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/LogGroup/Resource
+  ApiLambdaGETpaymentallServiceRole25A3FCC6:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/Resource
+  ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - xray:PutTraceSegments
+              - xray:PutTelemetryRecords
+            Effect: Allow
+            Resource: '*'
+          - Action: s3:*
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*
+          - Action: dynamodb:*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - PaymentsTable9E001CC6
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - PaymentsTable9E001CC6
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+      PolicyName: ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461
+      Roles:
+        - Ref: ApiLambdaGETpaymentallServiceRole25A3FCC6
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/DefaultPolicy/Resource
+  ApiLambdaGETpaymentall6E6FAF3E:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      Role:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentallServiceRole25A3FCC6
+          - Arn
+      Environment:
+        Variables:
+          SST_DEBUG_SRC_PATH: services
+          SST_DEBUG_SRC_HANDLER: functions/payment.main
+          SST_DEBUG_ENDPOINT: >-
+            wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root
+          SST_DEBUG_BUCKET_NAME: arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+          SST_FUNCTION_ID: >-
+            arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-payment-all
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+          SST_APP: Test
+          SST_STAGE: arn-aws-iam--305172134505-root
+          SST_Table_tableName_Payments:
+            Ref: PaymentsTable9E001CC6
+          SST_DEBUG_IS_API_ROUTE: '1'
+      EphemeralStorage:
+        Size: 512
+      Handler: index.main
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 10
+      TracingConfig:
+        Mode: Active
+    DependsOn:
+      - ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461
+      - ApiLambdaGETpaymentallServiceRole25A3FCC6
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Resource
+      aws:asset:path: >-
+        asset.c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ApiLambdaGETpaymentallEventInvokeConfigAE9B116A:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: ApiLambdaGETpaymentall6E6FAF3E
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/EventInvokeConfig/Resource
+  ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentall6E6FAF3E
+          - Arn
+      PayloadFormatVersion: '2.0'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all/Resource
+  ApiRouteGETpaymentallIntegrationGETpaymentallPermission83431E03:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ApiLambdaGETpaymentall6E6FAF3E
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':execute-api:ap-south-1:305172134505:'
+            - Ref: ApiCD79AAA0
+            - /*/*/payment/all
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all-Permission
+  ApiRouteGETpaymentall0B767E83:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      RouteKey: GET /payment/all
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Resource
+  ApiLambdaGETcheckstatusServiceRole0E99B268:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ''
+            - - 'arn:'
+              - Ref: AWS::Partition
+              - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/Resource
+  ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - xray:PutTraceSegments
+              - xray:PutTelemetryRecords
+            Effect: Allow
+            Resource: '*'
+          - Action: s3:*
+            Effect: Allow
+            Resource:
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+              - >-
+                arn:aws:s3:::arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g/*
+          - Action: dynamodb:*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - PaymentsTable9E001CC6
+                  - Arn
+              - Fn::Join:
+                  - ''
+                  - - Fn::GetAtt:
+                        - PaymentsTable9E001CC6
+                        - Arn
+                    - /*
+        Version: '2012-10-17'
+      PolicyName: ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1
+      Roles:
+        - Ref: ApiLambdaGETcheckstatusServiceRole0E99B268
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/DefaultPolicy/Resource
+  ApiLambdaGETcheckstatusE6EF6F54:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: cdk-hnb659fds-assets-305172134505-ap-south-1
+        S3Key: c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      Role:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusServiceRole0E99B268
+          - Arn
+      Environment:
+        Variables:
+          SST_DEBUG_SRC_PATH: services
+          SST_DEBUG_SRC_HANDLER: functions/lambda.main
+          SST_DEBUG_ENDPOINT: >-
+            wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root
+          SST_DEBUG_BUCKET_NAME: arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+          SST_FUNCTION_ID: >-
+            arn-aws-iam--305172134505-root-Test-MyStack-Api-Lambda_GET_-check-status
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+          SST_APP: Test
+          SST_STAGE: arn-aws-iam--305172134505-root
+          SST_Table_tableName_Payments:
+            Ref: PaymentsTable9E001CC6
+          SST_DEBUG_IS_API_ROUTE: '1'
+      EphemeralStorage:
+        Size: 512
+      Handler: index.main
+      MemorySize: 1024
+      Runtime: nodejs16.x
+      Tags:
+        - Key: sst:app
+          Value: Test
+        - Key: sst:stage
+          Value: arn-aws-iam--305172134505-root
+      Timeout: 10
+      TracingConfig:
+        Mode: Active
+    DependsOn:
+      - ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1
+      - ApiLambdaGETcheckstatusServiceRole0E99B268
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Resource
+      aws:asset:path: >-
+        asset.c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49.zip
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  ApiLambdaGETcheckstatusEventInvokeConfig388A3269:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: ApiLambdaGETcheckstatusE6EF6F54
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/EventInvokeConfig/Resource
+  ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusE6EF6F54
+          - Arn
+      PayloadFormatVersion: '2.0'
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status/Resource
+  ApiRouteGETcheckstatusIntegrationGETcheckstatusPermission85D7A6BD:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ApiLambdaGETcheckstatusE6EF6F54
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':execute-api:ap-south-1:305172134505:'
+            - Ref: ApiCD79AAA0
+            - /*/*/check-status
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status-Permission
+  ApiRouteGETcheckstatus2D9C3AF0:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Ref: ApiCD79AAA0
+      RouteKey: GET /check-status
+      AuthorizationType: NONE
+      Target:
+        Fn::Join:
+          - ''
+          - - integrations/
+            - Ref: ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9
+    Metadata:
+      aws:cdk:path: >-
+        arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Resource
+  ApiParameterurl09B86AB9:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Value:
+        Fn::GetAtt:
+          - ApiCD79AAA0
+          - ApiEndpoint
+      Name: /sst/Test/arn-aws-iam--305172134505-root/Api/Api/url
+      Tags:
+        sst:app: Test
+        sst:stage: arn-aws-iam--305172134505-root
+    Metadata:
+      aws:cdk:path: arn-aws-iam--305172134505-root-Test-MyStack/Api/Parameter_url/Resource
+Outputs:
+  ApiEndpoint:
+    Value:
+      Fn::GetAtt:
+        - ApiCD79AAA0
+        - ApiEndpoint
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: >-
+      Version of the CDK Bootstrap resources in this environment, automatically
+      retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                  - '5'
+                - Ref: BootstrapVersion
+        AssertDescription: >-
+          CDK bootstrap stack version 6 required. Please run 'cdk bootstrap'
+          with a recent version of the CDK CLI.
+
+[2022-11-29T17:36:24.530] [DEBUG] default - deploy stack: run cdk deploy
+[2022-11-29T17:36:24.542] [DEBUG] default - deploy stack: poll stack status
+[2022-11-29T17:36:24.730] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:24.731] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:27.904] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:27.906] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:28.182] [TRACE] default - deploy stack: run cdk deploy: stderr: 
+✨  Synthesis time: 0.05s
+
+
+[2022-11-29T17:36:28.183] [TRACE] default - deploy stack: run cdk deploy: stderr: [1marn-aws-iam--305172134505-root-Test-MyStack[22m: building assets...
+
+
+[2022-11-29T17:36:28.440] [TRACE] default - deploy stack: run cdk deploy: stderr: [33mcurrent credentials could not be used to assume 'arn:aws:iam::305172134505:role/cdk-hnb659fds-deploy-role-305172134505-ap-south-1', but are for the right account. Proceeding anyway.[39m
+
+[2022-11-29T17:36:28.911] [TRACE] default - deploy stack: run cdk deploy: stderr: [0%] start: Building 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47:305172134505-ap-south-1
+
+[2022-11-29T17:36:28.912] [TRACE] default - deploy stack: run cdk deploy: stderr: [0%] start: Building c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49:305172134505-ap-south-1
+[0%] start: Building 494d8d6101e4084818a0725353aff77e1d265d3f0520d973e4b9aa0a1f7c0492:305172134505-ap-south-1
+[33%] success: Built 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47:305172134505-ap-south-1
+[66%] success: Built c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49:305172134505-ap-south-1
+[100%] success: Built 494d8d6101e4084818a0725353aff77e1d265d3f0520d973e4b9aa0a1f7c0492:305172134505-ap-south-1
+
+[1marn-aws-iam--305172134505-root-Test-MyStack[22m: assets built
+
+
+[2022-11-29T17:36:28.919] [TRACE] default - deploy stack: run cdk deploy: stderr: [1marn-aws-iam--305172134505-root-Test-MyStack[22m: deploying...
+
+[2022-11-29T17:36:29.109] [TRACE] default - deploy stack: run cdk deploy: stderr: [33mcurrent credentials could not be used to assume 'arn:aws:iam::305172134505:role/cdk-hnb659fds-deploy-role-305172134505-ap-south-1', but are for the right account. Proceeding anyway.[39m
+
+[2022-11-29T17:36:29.445] [TRACE] default - deploy stack: run cdk deploy: stderr: [0%] start: Publishing 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47:305172134505-ap-south-1
+
+[2022-11-29T17:36:29.447] [TRACE] default - deploy stack: run cdk deploy: stderr: [0%] start: Publishing c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49:305172134505-ap-south-1
+
+[2022-11-29T17:36:29.448] [TRACE] default - deploy stack: run cdk deploy: stderr: [0%] start: Publishing 494d8d6101e4084818a0725353aff77e1d265d3f0520d973e4b9aa0a1f7c0492:305172134505-ap-south-1
+
+[2022-11-29T17:36:29.630] [TRACE] default - deploy stack: run cdk deploy: stderr: [33mcurrent credentials could not be used to assume 'arn:aws:iam::305172134505:role/cdk-hnb659fds-file-publishing-role-305172134505-ap-south-1', but are for the right account. Proceeding anyway.[39m
+
+[2022-11-29T17:36:30.030] [TRACE] default - deploy stack: run cdk deploy: stderr: [33%] success: Published 377989a13861b4580168439d6861f200ef9082ee51cb10c5374964c056db8b47:305172134505-ap-south-1
+
+[2022-11-29T17:36:30.625] [TRACE] default - deploy stack: run cdk deploy: stderr: [33mcurrent credentials could not be used to assume 'arn:aws:iam::305172134505:role/cdk-hnb659fds-file-publishing-role-305172134505-ap-south-1', but are for the right account. Proceeding anyway.[39m
+
+[2022-11-29T17:36:31.158] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:31.159] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:31.306] [TRACE] default - deploy stack: run cdk deploy: stderr: [66%] success: Published 494d8d6101e4084818a0725353aff77e1d265d3f0520d973e4b9aa0a1f7c0492:305172134505-ap-south-1
+
+[2022-11-29T17:36:32.632] [TRACE] default - deploy stack: run cdk deploy: stderr: [33mcurrent credentials could not be used to assume 'arn:aws:iam::305172134505:role/cdk-hnb659fds-file-publishing-role-305172134505-ap-south-1', but are for the right account. Proceeding anyway.[39m
+
+[2022-11-29T17:36:32.779] [TRACE] default - deploy stack: run cdk deploy: stderr: [100%] success: Published c0a9f72d7cb5c0876e09fc811c668fda40d7e4419689e9d5b4dd8d90a1089f49:305172134505-ap-south-1
+
+[2022-11-29T17:36:33.409] [TRACE] default - deploy stack: run cdk deploy: stderr: [1marn-aws-iam--305172134505-root-Test-MyStack[22m: creating CloudFormation changeset...
+
+[2022-11-29T17:36:34.357] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:34.359] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:37.526] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:37.527] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:40.719] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:40.720] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:43.887] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_COMPLETE',
+  LastUpdatedTime: 2022-11-29T11:57:37.103Z
+}
+[2022-11-29T17:36:43.889] [DEBUG] default - deploy stack: poll stack status: unknown
+[2022-11-29T17:36:47.062] [DEBUG] default - deploy stack: poll stack status: {
+  StackStatus: 'UPDATE_IN_PROGRESS',
+  LastUpdatedTime: 2022-11-29T12:06:46.769Z
+}
+[2022-11-29T17:36:47.063] [DEBUG] default - deploy stack: poll stack status: cf update started
+[2022-11-29T17:36:47.064] [DEBUG] default - deploy stack: done arn-aws-iam--305172134505-root-Test-MyStack {
+  status: 'deploying',
+  statusReason: undefined,
+  account: '305172134505',
+  outputs: {
+    ApiEndpoint: 'https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com'
+  },
+  exports: {}
+}
+[2022-11-29T17:36:47.065] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[],"outputs":{"ApiEndpoint":"https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com"},"exports":{}}]
+[2022-11-29T17:36:47.067] [INFO] default - Checking deploy status...
+[2022-11-29T17:36:47.115] [DEBUG] default - deploy stack: run cdk deploy: exited with code null
+[2022-11-29T17:36:52.072] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[],"outputs":{"ApiEndpoint":"https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com"},"exports":{}}]
+[2022-11-29T17:36:52.073] [DEBUG] default - Fetching stack events arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:36:52.357] [INFO] default - arn-aws-iam--305172134505-root-Test-MyStack | [0mUPDATE_IN_PROGRESS[0m | AWS::CloudFormation::Stack | [0m[1marn-aws-iam--305172134505-root-Test-MyStack[22m[0m | [0mUser Initiated[0m
+[2022-11-29T17:36:52.359] [INFO] default - arn-aws-iam--305172134505-root-Test-MyStack | [0mUPDATE_IN_PROGRESS[0m | AWS::Lambda::Function | [0m[1mApiLambdaGETpaymentall6E6FAF3E[22m[0m
+[2022-11-29T17:36:52.360] [DEBUG] default - Checking stack status arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:36:52.513] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:36:52.514] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:36:57.516] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:36:57.517] [DEBUG] default - Fetching stack events arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:36:58.143] [INFO] default - arn-aws-iam--305172134505-root-Test-MyStack | [32mUPDATE_COMPLETE[39m | AWS::Lambda::Function | [32m[1mApiLambdaGETpaymentall6E6FAF3E[22m[39m
+[2022-11-29T17:36:58.144] [DEBUG] default - Checking stack status arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:36:58.298] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:36:58.299] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:03.314] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:03.315] [DEBUG] default - Fetching stack events arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:03.613] [DEBUG] default - Checking stack status arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:03.768] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:03.769] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:03.769] [INFO] default - Checking deploy status...
+[2022-11-29T17:37:08.784] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:08.785] [DEBUG] default - Fetching stack events arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:09.076] [DEBUG] default - Checking stack status arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:09.278] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:09.280] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:09.282] [INFO] default - Checking deploy status...
+[2022-11-29T17:37:14.284] [TRACE] default - Initial stack states: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"deploying","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z"}]
+[2022-11-29T17:37:14.286] [DEBUG] default - Fetching stack events arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:14.674] [INFO] default - arn-aws-iam--305172134505-root-Test-MyStack | [32mUPDATE_COMPLETE_CLEANUP_IN_PROGRESS[39m | AWS::CloudFormation::Stack | [32m[1marn-aws-iam--305172134505-root-Test-MyStack[22m[39m
+[2022-11-29T17:37:14.676] [INFO] default - arn-aws-iam--305172134505-root-Test-MyStack | [32mUPDATE_COMPLETE[39m | AWS::CloudFormation::Stack | [32m[1marn-aws-iam--305172134505-root-Test-MyStack[22m[39m
+[2022-11-29T17:37:14.677] [DEBUG] default - Checking stack status arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:14.845] [INFO] default - [32m[39m
+[32m ✅  arn-aws-iam--305172134505-root-Test-MyStack[39m
+[32m[39m
+[2022-11-29T17:37:14.846] [TRACE] default - After update deploy statuses: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"succeeded","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"endedAt":1669723634845,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"5aa5c6b0-6fde-11ed-9086-0a6e036e9e02","timestamp":"2022-11-29T12:07:11.255Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_COMPLETE_CLEANUP_IN_PROGRESS","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"5aeedda0-6fde-11ed-92dc-02edf3008bee","timestamp":"2022-11-29T12:07:11.729Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z","outputs":{"ApiEndpoint":"https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com"},"exports":{}}]
+[2022-11-29T17:37:14.847] [TRACE] default - After deploy stacks: [{"id":"arn-aws-iam--305172134505-root-Test-MyStack","name":"arn-aws-iam--305172134505-root-Test-MyStack","status":"succeeded","dependencies":[],"account":"305172134505","region":"ap-south-1","startedAt":1669723607065,"endedAt":1669723634845,"events":[{"eventId":"4c0ee1e0-6fde-11ed-b5ae-0a7e92f2a76a","timestamp":"2022-11-29T12:06:46.769Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_IN_PROGRESS","resourceStatusReason":"User Initiated","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_IN_PROGRESS-2022-11-29T12:06:51.795Z","timestamp":"2022-11-29T12:06:51.795Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_IN_PROGRESS","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"ApiLambdaGETpaymentall6E6FAF3E-UPDATE_COMPLETE-2022-11-29T12:06:59.170Z","timestamp":"2022-11-29T12:06:59.170Z","resourceType":"AWS::Lambda::Function","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"ApiLambdaGETpaymentall6E6FAF3E"},{"eventId":"5aa5c6b0-6fde-11ed-9086-0a6e036e9e02","timestamp":"2022-11-29T12:07:11.255Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_COMPLETE_CLEANUP_IN_PROGRESS","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"},{"eventId":"5aeedda0-6fde-11ed-92dc-02edf3008bee","timestamp":"2022-11-29T12:07:11.729Z","resourceType":"AWS::CloudFormation::Stack","resourceStatus":"UPDATE_COMPLETE","logicalResourceId":"arn-aws-iam--305172134505-root-Test-MyStack"}],"eventsFirstEventAt":"2022-11-29T12:06:41.769Z","outputs":{"ApiEndpoint":"https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com"},"exports":{}}]
+[2022-11-29T17:37:14.850] [INFO] default - 
+Stack arn-aws-iam--305172134505-root-Test-MyStack
+[2022-11-29T17:37:14.851] [INFO] default -   Status: deployed
+[2022-11-29T17:37:14.852] [INFO] default -   Outputs:
+[2022-11-29T17:37:14.853] [INFO] default -     ApiEndpoint: https://y8amaj4s0e.execute-api.ap-south-1.amazonaws.com
+[2022-11-29T17:37:14.855] [INFO] default - 
+[2022-11-29T17:37:14.856] [INFO] default - 
+[2022-11-29T17:37:14.857] [INFO] default - ==========================
+[2022-11-29T17:37:14.858] [INFO] default -  Starting Live Lambda Dev
+[2022-11-29T17:37:14.860] [INFO] default - ==========================
+[2022-11-29T17:37:14.861] [INFO] default - 
+[2022-11-29T17:37:14.888] [DEBUG] websocket - startWebSocketClient wss://e747rkfxoc.execute-api.ap-south-1.amazonaws.com/arn-aws-iam--305172134505-root arn-aws-iam-305172134505-root-tes-bucket83908e77-1eemiwwuv4g2g
+[2022-11-29T17:37:14.892] [DEBUG] default - Checking port 12557 on host 0.0.0.0
+[2022-11-29T17:37:14.920] [DEBUG] default - Checking port 13557 on host 0.0.0.0
+[2022-11-29T17:37:15.079] [DEBUG] runtime - Starting runtime server on port: 12557
+[2022-11-29T17:37:15.569] [DEBUG] websocket - WebSocket connection opened
+[2022-11-29T17:37:16.772] [INFO] client - Debug session started. Listening for requests...
+[2022-11-29T17:37:16.775] [DEBUG] client - Client connection id: cXNeVddEhcwCHcw=

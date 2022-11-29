@@ -1,0 +1,235 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "arn-aws-iam--305172134505-root-Test-MyStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "arn-aws-iam--305172134505-root-Test-MyStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "arn-aws-iam--305172134505-root-Test-MyStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://305172134505/ap-south-1",
+      "properties": {
+        "templateFile": "arn-aws-iam--305172134505-root-Test-MyStack.template.json",
+        "tags": {
+          "sst:app": "Test",
+          "sst:stage": "arn-aws-iam--305172134505-root"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::305172134505:role/cdk-hnb659fds-deploy-role-305172134505-ap-south-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::305172134505:role/cdk-hnb659fds-cfn-exec-role-305172134505-ap-south-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-305172134505-ap-south-1/494d8d6101e4084818a0725353aff77e1d265d3f0520d973e4b9aa0a1f7c0492.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "arn-aws-iam--305172134505-root-Test-MyStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::305172134505:role/cdk-hnb659fds-lookup-role-305172134505-ap-south-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "arn-aws-iam--305172134505-root-Test-MyStack.assets"
+      ],
+      "metadata": {
+        "/arn-aws-iam--305172134505-root-Test-MyStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "sst:app",
+                "Value": "Test"
+              },
+              {
+                "Key": "sst:stage",
+                "Value": "arn-aws-iam--305172134505-root"
+              }
+            ]
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerServiceRole41AEC181"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerServiceRoleDefaultPolicy73F93F56"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/CustomResourceHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerE8FB56BA"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/StackMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StackMetadata"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "PaymentsTable9E001CC6"
+            }
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Payments/Table/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PaymentsTable9E001CC6"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Payments/Parameter_tableName/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PaymentsParametertableName29654464"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiCD79AAA0"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Api/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiDefaultStage1AAE989B"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLogGroup1717FE17"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETpaymentallServiceRole25A3FCC6"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETpaymentallServiceRoleDefaultPolicy27EF0461"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETpaymentall6E6FAF3E"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--payment--all/EventInvokeConfig/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETpaymentallEventInvokeConfigAE9B116A"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETpaymentallIntegrationGETpaymentallE9CFAE87"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Integration_GET_--payment--all-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETpaymentallIntegrationGETpaymentallPermission83431E03"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--payment--all/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETpaymentall0B767E83"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETcheckstatusServiceRole0E99B268"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETcheckstatusServiceRoleDefaultPolicy04FBDAB1"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETcheckstatusE6EF6F54"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Lambda_GET_--check-status/EventInvokeConfig/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETcheckstatusEventInvokeConfig388A3269"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETcheckstatusIntegrationGETcheckstatusB72BD6C9"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Integration_GET_--check-status-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETcheckstatusIntegrationGETcheckstatusPermission85D7A6BD"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Route_GET_--check-status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETcheckstatus2D9C3AF0"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/Api/Parameter_url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiParameterurl09B86AB9"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/ApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/arn-aws-iam--305172134505-root-Test-MyStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "arn-aws-iam--305172134505-root-Test-MyStack"
+    }
+  }
+}

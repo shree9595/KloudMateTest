@@ -1,0 +1,5 @@
+{
+  "name": "Test",
+  "region": "ap-south-1",
+  "main": "stacks/index.ts"
+}
